@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PassGen</title>
+    <link rel="icon" type="image/x-icon" href="/logo/passgen.png">
+    <link rel="stylesheet" href="stylesheet.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <div id="nav-bar">
+        <a href="password-generator-website.html" target="_blank"><img id="header-img" class="left"
+                src="/password-generating-app/logo/passgen.png" alt="">
+            <span style="font-family:'Outfit';font-weight: 900; margin-left:5px"> PASSGEN</span>
+        </a>
+    </div>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-md-12 m-auto center">
+                <h1>Random <span style="color:var(--primary-color01)">Pass</span>word <span
+                        style="color:var(--primary-color02)">Gen</span>erator</h1>
+                <h3>Quickly create a strong, random password using the PassGen online password generator tool.</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="pwgen mt-5">
+                    <input type="text" id="password" readonly placeholder="Your password will appear here">
+                    <button onclick="generatePassword()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--primary-color01)"
+                            class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z" />
+                            <path
+                                d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466" />
+                        </svg>
+                    </button>
+                    <button onclick="copyPassword()"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                            fill="var(--primary-color01)" class="bi bi-copy" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z" />
+                        </svg></button>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-8 mx-auto ">
+                <div class="box  center">
+
+                    <h2>Password customisation</h2>
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6 m-auto">
+                                Password length
+                                <input type="number" id="pwLength" placeholder="">
+
+                            </div>
+                            <div class="col-md-6 pwoption m-auto" id="pwOption">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault" id="uppercase">
+                                        Uppercase
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault" id="lowercase">
+                                        Lowercase
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault" id="numbers">
+                                        Numbers
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault" id="characters">
+                                        Characters
+                                    </label>
+                                </div>
+
+
+
+
+
+
+                            </div>
+
+                        </div>
+                </div>
+                </form>
+
+                <br>
+
+                <p id="copyStatus">Password copied!</p>
+                <p id="blankPassword">Please enter the length of the password</p>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+
+
+        function generatePassword() {
+            const length = document.getElementById('pwLength').value;
+            if (length === '') {
+                console.log('There is no password to copy');
+                document.getElementById('blankPassword').style.visibility = 'visible'
+
+            }
+            else {
+                const characters = '!@#$%^&*()_+{}[]:;<>,.?/~`-=';
+                const numbers = '0123456789';
+                const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+                const lowercase = 'abcdefghijklmnopqrstuvwxyz'
+                const letters = characters + numbers + uppercase + lowercase
+                let password = '';
+                for (let i = 0; i < length; i++) {
+                    const randomIndex = Math.floor(Math.random() * letters.length)
+
+                    password += letters[randomIndex];
+                }
+                document.getElementById('password').value = password;
+                document.getElementById('copyStatus').style.visibility = 'hidden';
+                document.getElementById('blankPassword').style.visibility = 'hidden'
+                // Hide the copy message after generating a new password
+            }
+
+        }
+
+        function copyPassword() {
+            const passwordField = document.getElementById('password');
+
+            if (passwordField.value === '') {
+                console.log('There is no password to copy');
+                document.getElementById('blankPassword').style.visibility = 'visible'
+
+            }
+            else {
+
+                passwordField.select(); // Select the text in the input field
+                passwordField.setSelectionRange(0, 99999); // For mobile devices
+
+                navigator.clipboard.writeText(passwordField.value) // Copy the text to clipboard
+                    .then(() => {
+
+                        console.log('Password successfully copied!');
+                        document.getElementById('copyStatus').style.visibility = 'visible';
+                        document.getElementById('blankPassword').style.visibility = 'hidden'
+
+                    })
+
+                    .catch(err => {
+                        console.error('Failed to copy password:', err);
+                    });
+            }
+
+        }
+    </script>
+
+</body>
+
+</html>
